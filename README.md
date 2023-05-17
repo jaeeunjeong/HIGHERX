@@ -1,0 +1,23 @@
+
+## TODO
+- Auth
+  - [ ] login
+  - [ ] logout
+  - [ ] token
+- verify
+  - [ ] account
+  - [ ] crn
+  - [ ] nickname
+- User
+  - [ ] post
+    - [ ] 중복 account 검증
+    - [ ] 중복 nickname 검증
+    - [ ] 검증된 crn인지 확인
+  - [ ] get
+  - [ ] delete
+- Todo
+  - [ ] get
+  - [ ] post
+  - [ ] delete
+  - [ ] put
+  - [ ] get
