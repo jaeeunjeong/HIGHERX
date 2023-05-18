@@ -1,16 +1,22 @@
 package com.HIGHERX.util;
 
+import org.springframework.beans.factory.annotation.Value;
+
 public class CrnVerifyUtils {
 
-    private final int authenticationKey = 137137135;
+    // TODO 설정에서 관리하기
+    @Value("${auth.key}")
+    private static int authenticationKeyOrigin;
 
-    boolean crnVerify(String crn) {
+    public static boolean crnVerify(String crn) {
+
+        int authenticationKey = authenticationKeyOrigin;
 
         // 1.
         int number = Integer.parseInt(crn.replace("-", "").substring(0, 9));
 
         // 2.
-        int sum = sum(authenticationKey, number);
+        int sum = sumCrnOperation(authenticationKey, number);
 
         // 3.
         int lastValueResult = lastValueOperation(authenticationKey, number);
@@ -24,12 +30,12 @@ public class CrnVerifyUtils {
         // 6.
         int result = 10 - division;
 
-        if(result == 1) return true;
+        if (result == 1) return true;
 
         return false;
     }
 
-    public int lastValueOperation(int authenticationKey, int number) {
+    public static int lastValueOperation(int authenticationKey, int number) {
         int result = 0;
 
         int lastAuthKey = authenticationKey % 10;
@@ -38,7 +44,7 @@ public class CrnVerifyUtils {
         return (int) lastAuthKey * lastNumber / 10;
     }
 
-    public int sum(int authenticationKey, int number) {
+    public static int sumCrnOperation(int authenticationKey, int number) {
         int result = 0;
 
         while (authenticationKey > 0) {
