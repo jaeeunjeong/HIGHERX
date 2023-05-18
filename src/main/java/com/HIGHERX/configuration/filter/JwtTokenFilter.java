@@ -1,5 +1,6 @@
 package com.HIGHERX.configuration.filter;
 
+import com.HIGHERX.controller.response.user.UserResponse;
 import com.HIGHERX.dto.user.UserDto;
 import com.HIGHERX.service.user.UserService;
 import com.HIGHERX.util.JwtTokenUtils;
