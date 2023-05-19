@@ -23,11 +23,6 @@ public class VerifyController {
         return Response.success(new VerifyAccountResponse(verifyService.validateAccount(account)));
     }
 
-    @GetMapping("/crn")
-    public Response<VerifyCrnResponse> getCrn(@RequestParam(name = "crn", required = true) String crn) {
-        return Response.success(new VerifyCrnResponse(verifyService.validateCrn(crn)));
-    }
-
     @GetMapping("/nickname")
     public Response<VerifyNicknameResponse> getNickname(@RequestParam(name = "nickname", required = true) String nickname) {
         return Response.success(new VerifyNicknameResponse(verifyService.validateNickname(nickname)));

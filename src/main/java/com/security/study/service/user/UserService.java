@@ -7,7 +7,6 @@ import com.security.study.entity.user.UserEntity;
 import com.security.study.exception.ApplicationException;
 import com.security.study.exception.ErrorCode;
 import com.security.study.repository.user.UserRepository;
-import com.security.study.util.CrnVerifyUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,9 +29,6 @@ public class UserService {
         userRepository.findByNickname(req.getNickname()).ifPresent(it -> {
             throw new ApplicationException(ErrorCode.DUPLICATED_USER_NICKNAME, String.format("%s is Duplicated", req.getNickname()));
         });
-
-        if (CrnVerifyUtils.crnVerify(req.getCrn()))
-            throw new ApplicationException(ErrorCode.INVALID_CRN, String.format("%s is invalid", req.getCrn()));
 
         userRepository.save(UserEntity.of(req.getAccount(), passwordEncoder.encode(req.getPassword()), req.getNickname(), req.getPhone(), req.getCrn()));
     }
