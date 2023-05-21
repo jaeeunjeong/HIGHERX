@@ -1,16 +1,19 @@
 package com.security.study.entity.user;
 
+import com.security.study.entity.task.TaskEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 
 @Entity
 @Getter
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(nullable = false, length = 30, unique = true)
@@ -33,6 +36,10 @@ public class UserEntity {
 
     @Column
     private Timestamp updatedAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<TaskEntity> tasks;
+
 
     protected UserEntity() {
     }

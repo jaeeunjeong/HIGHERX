@@ -15,7 +15,7 @@
     - [ ] 검증된 crn인지 확인
   - [ ] get
   - [ ] delete
-- Todo
+- Task
   - [ ] get
   - [ ] post
   - [ ] delete
