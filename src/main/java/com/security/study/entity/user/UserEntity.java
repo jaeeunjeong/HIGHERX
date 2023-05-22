@@ -67,9 +67,4 @@ public class UserEntity {
         return entity;
     }
 
-    public void deleteUser() {
-        this.phone = "************";
-        this.crn = "*************";
-        this.password = "*********";
-    }
 }

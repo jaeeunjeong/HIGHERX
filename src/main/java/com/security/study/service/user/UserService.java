@@ -38,15 +38,6 @@ public class UserService {
         return UserResponse.fromDto(UserDto.fromEntity(getUser(account)));
     }
 
-    @Transactional
-    public void deleteUser(String account) {
-        UserEntity userEntity = getUser(account);
-
-        userEntity.deleteUser();
-
-        userRepository.save(userEntity);
-    }
-
     public UserEntity getUser(String account) {
         return userRepository.findByAccount(account).orElseThrow(() ->
             new ApplicationException(ErrorCode.USER_NOT_FOUND, String.format("%s not founded", account)));
