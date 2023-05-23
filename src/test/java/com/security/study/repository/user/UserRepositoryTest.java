@@ -3,12 +3,14 @@ package com.security.study.repository.user;
 import com.security.study.entity.user.UserEntity;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.DataIntegrityViolationException;
 
+import static com.security.study.fixture.UserEntityFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -68,21 +70,34 @@ class UserRepositoryTest {
             .isInstanceOf(DataIntegrityViolationException.class);
     }
 
-    private UserEntity createUser() {
-        return UserEntity.of("account", "password", "nickname", "phone", "crn");
+    @DisplayName("user 삭제 확인")
+    @Test
+    void test5() {
+        // given
+        UserEntity user = userRepository.saveAndFlush(createUser());
+
+        // when
+        user.deleteUser();
+        userRepository.save(user);
+        userRepository.flush();
+
+        // then
+        UserEntity result = userRepository.findById(user.getId()).orElseThrow(RuntimeException::new);
+        assertThat(result.getPhone()).startsWith("***");
+        assertThat(result.getPassword()).startsWith("***");
+        assertThat(result.getCrn()).startsWith("***");
     }
 
-    private UserEntity createUserAccount(String account) {
-        return UserEntity.of(account, "password1", "nickname1", "phone1", "crn1");
-    }
+    @DisplayName("user 삭제와 Task 도 삭제 되는지 확인")
+    @Test
+    void test6() {
+        // given
 
-    private UserEntity createUserNickname(String nickname) {
-        return UserEntity.of("account1", "password1", nickname, "phone1", "crn1");
-    }
 
-    private UserEntity createUserCrn(String crn) {
-        return UserEntity.of("account1", "password1", "nickname1", "phone1", crn);
-    }
+        // when
 
+
+        // then
+    }
 
 }

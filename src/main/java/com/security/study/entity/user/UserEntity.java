@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,9 +38,8 @@ public class UserEntity {
     @Column
     private Timestamp updatedAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<TaskEntity> tasks;
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TaskEntity> tasks = new ArrayList<>();
 
     protected UserEntity() {
     }
@@ -67,4 +67,21 @@ public class UserEntity {
         return entity;
     }
 
+    public static UserEntity of(String account, String password, String nickname, String phone) {
+
+        UserEntity entity = new UserEntity();
+
+        entity.account = account;
+        entity.password = password;
+        entity.nickname = nickname;
+        entity.phone = phone;
+
+        return entity;
+    }
+
+    public void deleteUser() {
+        this.phone = "************";
+        this.crn = "*************";
+        this.password = "*********";
+    }
 }
