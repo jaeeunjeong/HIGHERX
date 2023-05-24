@@ -3,9 +3,11 @@ package com.security.study.entity.task;
 import com.security.study.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class TaskEntity {
     @Id
@@ -23,11 +25,12 @@ public class TaskEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    public TaskEntity(String title, String content, UserEntity user) {
+    public static TaskEntity of(String title, String content, UserEntity user) {
         TaskEntity entity = new TaskEntity();
-        this.title = title;
-        this.content = content;
+        entity.title = title;
+        entity.content = content;
         user.getTasks().add(entity);
-        this.user = user;
+        entity.user = user;
+        return entity;
     }
 }
